@@ -1,0 +1,54 @@
+{
+  "graph": {
+    "nodes": [
+      {
+        "id": 0,
+        "title": "Source",
+        "pins": [
+          {
+            "id": 0,
+            "kind": "Input",
+            "label": "In"
+          },
+          {
+            "id": 1,
+            "kind": "Output",
+            "label": "Out"
+          }
+        ]
+      },
+      {
+        "id": 1,
+        "title": "Sink",
+        "pins": [
+          {
+            "id": 2,
+            "kind": "Input",
+            "label": "In"
+          },
+          {
+            "id": 3,
+            "kind": "Output",
+            "label": "Out"
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "id": 0,
+        "from": 1,
+        "to": 2
+      },
+      {
+        "id": 1,
+        "from": 3,
+        "to": 0
+      }
+    ],
+    "next_node_id": 2,
+    "next_pin_id": 4,
+    "next_link_id": 2
+  },
+  "version": "0.1.0"
+}
