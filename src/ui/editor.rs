@@ -51,9 +51,9 @@ pub fn render_editor(ui: &Ui, app: &mut App, pos: [f32; 2], size: [f32; 2]) {
                 let minimap_hovered: Cell<Option<NodeId>> = Cell::new(None);
 
                 // Apply theme on the first frame only (persistent on the EditorContext).
-                // NOTE: The tutorial applies the theme in App::new() via `imnodes::editor()`,
-                // but that free function doesn't exist — `editor()` is a method on `NodesUi`
-                // which requires a `Ui`. We defer to the first frame where a `Ui` is available.
+                // The tutorial explains that this must be deferred to the first frame (not
+                // `App::new()`): the style setters need a `NodeEditor` token, which requires
+                // a `&Ui` that isn't available in `on_setup`.
                 if !app.ui.theme_applied {
                     app.theme.apply(&editor);
                     app.ui.theme_applied = true;
@@ -130,10 +130,9 @@ pub fn render_editor(ui: &Ui, app: &mut App, pos: [f32; 2], size: [f32; 2]) {
             app.ui.minimap_hovered = interactions.minimap_hovered;
 
             // --- Right-click context menu trigger ---
-            // NOTE: The tutorial uses `ui.io().mouse_clicked[MouseButton::Right as usize]`,
-            // but `mouse_clicked` is not an array field on `Io`. The correct API is
-            // `ui.is_mouse_clicked(MouseButton::Right)`. Similarly `mouse_pos` and
-            // `key_ctrl` are methods, not fields.
+            // The tutorial uses `ui.is_mouse_clicked(MouseButton::Right)` here and
+            // `ui.io().mouse_pos()` / `ui.io().key_ctrl()` (methods, not array fields).
+            // `mouse_clicked` is not an array field on `Io`.
             if interactions.editor_hovered && ui.is_mouse_clicked(MouseButton::Right) {
                 app.ui.ctx_open_pos = Some(ui.io().mouse_pos());
                 app.ui.ctx_hovered_node = interactions.hovered_node;

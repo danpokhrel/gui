@@ -49,8 +49,9 @@ impl EditorTheme {
         editor.set_color(ColorElement::TitleBarHovered, self.title_hovered);
         editor.set_color(ColorElement::TitleBarSelected, self.title_selected);
         editor.set_color(ColorElement::NodeBackground, self.node_bg);
-        // NOTE: The tutorial uses `ColorElement::NodeBorder`, but that variant
-        // does not exist in dear-imnodes 0.15.1. The correct name is `NodeOutline`.
+        // `ColorElement::NodeBorder` does not exist in dear-imnodes 0.15.1;
+        // the correct variant is `NodeOutline`. (The field is named `node_border`
+        // for readability; the tutorial uses the same `NodeOutline` variant.)
         editor.set_color(ColorElement::NodeOutline, self.node_border);
         editor.set_color(ColorElement::Link, self.link);
         editor.set_color(ColorElement::LinkHovered, self.link_hovered);

@@ -49,10 +49,11 @@ impl App {
         let editor_context = nodes_context.create_editor_context();
         let theme = crate::theme::EditorTheme::dark();
 
-        // NOTE: The tutorial applies the theme here via `imnodes::editor(...)`,
-        // but `editor()` is a method on `NodesUi` (created via `ui.imnodes(ctx)`),
-        // which requires a `Ui`. In `on_setup` we only have `&mut Context`, so
-        // we defer theme application to the first frame in `render_editor`.
+        // The tutorial explains that the theme can't be applied here in `on_setup`:
+        // the ImNodes style setters need a `NodeEditor` token (a method on `NodesUi`,
+        // created via `ui.imnodes(ctx)`), which requires a `&Ui`. In `on_setup` we only
+        // have `&mut Context`, so we defer theme application to the first frame in
+        // `render_editor` (see `editor.rs`'s `theme_applied` guard).
         let mut graph = GraphState::new();
 
         // Seed with a couple of example nodes

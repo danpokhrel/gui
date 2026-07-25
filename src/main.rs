@@ -30,11 +30,11 @@ fn main() -> Result<(), AppError> {
         ..Default::default()
     };
 
-    // NOTE: The tutorial stashes `app` in a plain `Option<App>` shared between
-    // `on_setup` and `on_frame` closures. This does NOT compile: both closures
-    // are `'static`, so `on_setup` can't borrow `app` while `on_frame` moves it.
-    // The fix is interior mutability: `Rc<RefCell<Option<App>>>` lets both
-    // closures own a cloned handle to the shared slot.
+    // The tutorial walks through why stashing `app` in a plain `Option<App>` shared
+    // between `on_setup` and `on_frame` does NOT compile (both closures are `'static`,
+    // so `on_setup` can't borrow `app` while `on_frame` moves it) and explains the
+    // interior-mutability fix: `Rc<RefCell<Option<App>>>` lets both closures own a
+    // cloned handle to the shared slot.
     let app: Rc<RefCell<Option<App>>> = Rc::new(RefCell::new(None));
 
     AppBuilder::new()
@@ -57,8 +57,8 @@ fn main() -> Result<(), AppError> {
             let cfg = dear_imgui_rs::FontConfig::new().rasterizer_density(2.0);
             atlas.add_font_from_memory_ttf(font_data, 18.0, Some(&cfg), None);
         })
-        // NOTE: The tutorial's on_frame uses `move |ui|` (one arg), but the actual
-        // dear-app 0.15.1 API is `FnMut(&Ui, &mut AddOns)` — two arguments.
+        // `on_frame` in dear-app 0.15.1 is `FnMut(&Ui, &mut AddOns)` — two arguments.
+        // The tutorial uses `move |ui, _addons|` to match this signature.
         .on_frame({
             let app = Rc::clone(&app);
             move |ui, _addons| {
